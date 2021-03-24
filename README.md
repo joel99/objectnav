@@ -109,7 +109,7 @@ We present samples of failure modes noted in the behavioral study for the base a
 
 *Goal: Plant*
 <video width="960" height="180" controls>
-  <source src="videos/base_rednet_flavor.mp4" type="video/mp4">
+  <source src="videos/base_rednet_flavor1.mp4" type="video/mp4">
 </video>
 *Goal: Picture*
 <video width="960" height="180" controls>
