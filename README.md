@@ -1,4 +1,4 @@
-On this page, we provide selected videos of various agents on the validation split, highlighting different failure modes as well as agent instability. The videos show, from left to right, RGB, Depth, Semantic Input (either ground truth or RedNet segmentations), and the top-down map (the agent does not receive a top-down map). The top down map shows goals as red squares and valid success zones in pink. The annotations at the top left of each video show the coverage and the SGE fed into the agent.
+On this page, we provide selected videos of various agents on the validation split, highlighting different failure modes as well as agent instability. The videos show, from left to right, RGB, Depth, Semantic Input (either ground truth or RedNet segmentations), and the top-down map (the agent does not receive a top-down map). The top down map shows goals as red squares and valid success zones in pink. The annotations at the top left of each video show the coverage and the SGE fed into the agent. Unless otherwise indicated, the videos use GT segmentation.
 
 ## Selected Successes from 4-Action, 6-Action, and 6-Action + Tether
 All of the following have a **cushion** goal.
@@ -103,4 +103,15 @@ We present samples of failure modes noted in the behavioral study for the base a
 *Goal: Chair*
 <video width="960" height="180" controls>
   <source src="videos/base_gt_flavor3.mp4" type="video/mp4">
+</video>
+
+## Additional 6-Action Base Episodes with RedNet Segmentation
+
+*Goal: Plant*
+<video width="960" height="180" controls>
+  <source src="videos/base_rednet_flavor.mp4" type="video/mp4">
+</video>
+*Goal: Picture*
+<video width="960" height="180" controls>
+  <source src="videos/base_rednet_flavor2.mp4" type="video/mp4">
 </video>
