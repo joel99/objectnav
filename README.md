@@ -1,6 +1,6 @@
 On this page, we provide selected videos of various agents, highlighting different failure modes as well as agent instability. The videos show, from left to right, RGB, Depth, Semantic Input (either ground truth or RedNet segmentations), and the top-down map (the agent does not receive a top-down map). The annotations at the top left of each video show the coverage and the SGE fed into the agent.
 
-### Selected Successes from 4-Action, 6-Action, and 6-Action + Tether
+## Selected Successes from 4-Action, 6-Action, and 6-Action + Tether
 *4-Action: SPL 0.66*
 <video width="960" height="180" controls>
   <source src="videos/base4_gt_short_0.66.mp4" type="video/mp4">
@@ -9,9 +9,9 @@ On this page, we provide selected videos of various agents, highlighting differe
 <video width="960" height="180" controls>
   <source src="videos/base_gt_short_0.57.mp4" type="video/mp4">
 </video>
-*6-Action + Tether: SPL 0.60*
+*6-Action + Tether: SPL 0.82*
 <video width="960" height="180" controls>
-  <source src="videos/tether_gt_short_0.60.mp4" type="video/mp4">
+  <source src="videos/tether_gt_short_0.82.mp4" type="video/mp4">
 </video>
 *4-Action: SPL 0.08*
 <video width="960" height="180" controls>
@@ -21,12 +21,76 @@ On this page, we provide selected videos of various agents, highlighting differe
 <video width="960" height="180" controls>
   <source src="videos/base_gt_long_0.06.mp4" type="video/mp4">
 </video>
-*6-Action + Tether: SPL 0.82*
+*6-Action + Tether: SPL 0.60*
 <video width="960" height="180" controls>
-  <source src="videos/tether_gt_long_0.82.mp4" type="video/mp4">
+  <source src="videos/tether_gt_long_0.60.mp4" type="video/mp4">
 </video>
 
-### Additional Random Successes for 6-Action Base Agent
+## Failure Modes
+We present samples of failure modes noted in the behavioral study for the base agent.
+
+*Plateau (Spawn)*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_debris_spawn.mp4" type="video/mp4">
+</video>
+*Plateau*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_debris.mp4" type="video/mp4">
+</video>
+*Last Mile*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_lastmile.mp4" type="video/mp4">
+</video>
+*Loop*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_loop.mp4" type="video/mp4">
+</video>
+*Open*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_open.mp4" type="video/mp4">
+</video>
+*Dataset Bug*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_goal_bug.mp4" type="video/mp4">
+</video>
+*Detection*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_detect.mp4" type="video/mp4">
+</video>
+*Commitment*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_commit.mp4" type="video/mp4">
+</video>
+*Explore*
+<video width="960" height="180" controls>
+  <source src="videos/base_gt_explore.mp4" type="video/mp4">
+</video>
+*Quit (Tether Failure)*
+<video width="960" height="180" controls>
+  <source src="videos/tether_gt_quit.mp4" type="video/mp4">
+</video>
+
+## Unstable Behavior with Zero-Shot Transfer to RedNet Segmentation
+*4-Action*
+<video width="960" height="180" controls>
+  <source src="videos/base4_instability.mp4" type="video/mp4">
+</video>
+*6-Action*
+<video width="960" height="180" controls>
+  <source src="videos/base_instability.mp4" type="video/mp4">
+</video>
+
+*4-Action (Example 2)*
+<video width="960" height="180" controls>
+  <source src="videos/base4_instability2.mp4" type="video/mp4">
+</video>
+*6-Action (Example 2)*
+<video width="960" height="180" controls>
+  <source src="videos/base_instability2.mp4" type="video/mp4">
+</video>
+
+
+## Additional Random Successes for 6-Action Base Agent
 <video width="960" height="180" controls>
   <source src="videos/base_gt_flavor1.mp4" type="video/mp4">
 </video>
