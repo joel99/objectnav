@@ -1,0 +1,53 @@
+TRAINER_NAME: "belief-ddppo"
+ENV_NAME: "DummyRLEnv"
+BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_mp3d_full_4a_train.yaml"
+# BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_mp3d_full_4a.yaml"
+RL:
+  fp16_mode: "autocast"
+  POLICIES:
+    - "coverage_explore_reward" # head 1
+    - "objnav_sparse_reward" # head 1
+  SLACK_REWARD: -0.0001 # Only applied on first head (with coverage)
+  POLICY:
+    FULL_VISION: True # Hack to load the right rednet.
+    OBS_TRANSFORMS:
+      ENABLED_TRANSFORMS: ["ResizeShortestEdge"] # 480 x 640 -> 240 x 320 -> 20
+      RESIZE_SHORTEST_EDGE:
+        SIZE: 240 # -> 240 x 320. try 228 x 300, which is must closer to 256 x 256 area, but is not very round. or 210 x 280
+  PPO:
+    hidden_size: 196
+    ROLLOUT:
+      METRICS: ['reached', 'mini_reached', 'visit_count', 'goal_vis']
+    POLICY:
+      name: "AttentiveBeliefPolicy"
+      USE_SEMANTICS: True
+      EVAL_GT_SEMANTICS: True
+      input_drop: 0.1
+      output_drop: 0.1
+      embed_sge: False # Cmon, no point in not doing this anymore.
+      BELIEFS:
+        NUM_BELIEFS: 6
+        AUX_MAP: [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
+      DOUBLE_PREPROCESS_BUG: False
+      jit: True
+      FULL_RESNET: True
+  AUX_TASKS:
+    tasks:
+    - "CPCA"
+    - "PBL"
+    - "CPCA_B"
+    - "GID"
+    - "CoveragePrediction"
+    - "ActionDist_A"
+    - "SemanticGoalExists"
+    - "SemanticGoalExists"
+    - "SemanticGoalExists"
+    - "SemanticGoalExists"
+    - "SemanticGoalExists"
+    - "SemanticGoalExists"
+    required_sensors: ["SEMANTIC_SENSOR"]
+    CoveragePrediction:
+      key: "mini_reached"
+      hidden_size: 32
+      loss_factor: 0.025
+      regression: False

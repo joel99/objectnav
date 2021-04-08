@@ -1,0 +1,30 @@
+ENVIRONMENT:
+  MAX_EPISODE_STEPS: 250
+SIMULATOR:
+  AGENT_0:
+    SENSORS: ['RGB_SENSOR']
+  HABITAT_SIM_V0:
+    GPU_DEVICE_ID: 0
+  RGB_SENSOR:
+    WIDTH: 256
+    HEIGHT: 256
+  # DEPTH_SENSOR:
+  #   WIDTH: 256
+  #   HEIGHT: 256
+TASK:
+  TYPE: Coverage-v0
+  SENSORS: []
+  MEASUREMENTS: ['COVERAGE']
+  TOP_DOWN_MAP:
+    DRAW_SHORTEST_PATH: False
+    DRAW_SOURCE_AND_TARGET: False
+    FOG_OF_WAR:
+      DRAW: False
+  COVERAGE:
+    TYPE: Coverage
+    GRID_DELTA: 1.0
+  GOAL_SENSOR_UUID: no_sensor
+DATASET:
+  TYPE: PointNav-v1
+  SPLIT: train
+  DATA_PATH: /srv/share/datasets/habitat-sim-datasets/pointnav/gibson/v1/{split}/{split}.json.gz

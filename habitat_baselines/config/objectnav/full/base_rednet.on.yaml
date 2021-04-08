@@ -1,0 +1,44 @@
+TRAINER_NAME: "belief-ddppo"
+ENV_NAME: "DummyRLEnv"
+# ! Train on half resolution (we'll resize on evalai)
+BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_mp3d_full_train.yaml"
+# BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_mp3d_full.yaml"
+RL:
+  fp16_mode: "autocast"
+  POLICIES:
+    - "coverage_explore_reward" # head 1
+    - "objnav_sparse_reward" # head 1
+  SLACK_REWARD: -0.0001 # Only applied on first head (with coverage)
+  POLICY:
+    FULL_VISION: True # Hack to load the right rednet.
+
+    PRETRAINED_CKPT: "/srv/share/jye72/objectnav/base-full/base-full.35.pth"
+    TRAIN_PRED_SEMANTICS: True
+
+    OBS_TRANSFORMS:
+      ENABLED_TRANSFORMS: ["ResizeShortestEdge"] # 480 x 640 -> 240 x 320 -> 20
+      RESIZE_SHORTEST_EDGE:
+        SIZE: 240 # -> 240 x 320. try 228 x 300, which is must closer to 256 x 256 area, but is not very round. or 210 x 280
+  PPO:
+    hidden_size: 196
+    entropy_coef: 0.0075 # We have more actions, scaling this down.
+    ROLLOUT:
+      METRICS: ['reached', 'mini_reached', 'visit_count']
+    POLICY:
+      name: "AttentiveBeliefPolicy"
+      USE_SEMANTICS: True
+      EVAL_GT_SEMANTICS: True
+      input_drop: 0.1
+      output_drop: 0.1
+      embed_sge: True # Cmon, no point in not doing this anymore.
+      DOUBLE_PREPROCESS_BUG: False
+      jit: True
+      FULL_RESNET: True
+  AUX_TASKS:
+    tasks: ["CPCA", "PBL", "CPCA_B", "GID", "CoveragePrediction", "ActionDist_A"]
+    required_sensors: ["SEMANTIC_SENSOR"]
+    CoveragePrediction:
+      key: "mini_reached"
+      hidden_size: 32
+      loss_factor: 0.025
+      regression: False

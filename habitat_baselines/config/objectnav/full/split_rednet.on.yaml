@@ -1,0 +1,54 @@
+TRAINER_NAME: "belief-ddppo"
+ENV_NAME: "DummyRLEnv"
+
+# ! EDITS FOR EVALAI TESTING
+BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_mp3d_full_train.yaml"
+# BASE_TASK_CONFIG_PATH: "configs/tasks/objectnav_mp3d_full.yaml"
+RL:
+  fp16_mode: "autocast"
+  POLICIES:
+    - "coverage_explore_reward" # head 1
+    - "objnav_sparse_reward" # head 1
+    - "objnav_sparse_reward_a" # head 2 (only last reward is used in head 2)
+  REWARD_FUSION:
+    STRATEGY: "SPLIT"
+    ENV_ON_ALL: False
+    SPLIT:
+      TRANSITION: 1e8
+      IMPORTANCE_WEIGHT: True
+  SLACK_REWARD: -0.0001 # Only applied on first head (with coverage)
+  POLICY:
+    FULL_VISION: True # Hack to load the right rednet.
+
+    PRETRAINED_CKPT: "/srv/share/jye72/objectnav/split_clamp-full/split_clamp-full.35.pth"
+    TRAIN_PRED_SEMANTICS: True
+
+    OBS_TRANSFORMS:
+      ENABLED_TRANSFORMS: ["ResizeShortestEdge"] # 480 x 640 -> 240 x 320 -> 20
+      RESIZE_SHORTEST_EDGE:
+        SIZE: 240 # -> 240 x 320. try 228 x 300, which is must closer to 256 x 256 area, but is not very round. or 210 x 280
+  PPO:
+    SPLIT_IW_BOUNDS: [0.01, 1.0]
+    hidden_size: 196
+    entropy_coef: 0.0075 # We have more actions, scaling this down. (doesn't learn without scaling down)
+    ROLLOUT:
+      METRICS: ['reached', 'mini_reached', 'visit_count']
+    POLICY:
+      name: "AttentiveBeliefMultiPolicy"
+      USE_SEMANTICS: True
+      EVAL_GT_SEMANTICS: True
+    #   EVAL_SEMANTICS_STABILIZE: True # ! EDIT
+      input_drop: 0.1
+      output_drop: 0.1
+      embed_sge: True # Cmon, no point in not doing this anymore.
+      DOUBLE_PREPROCESS_BUG: False
+      jit: True
+      FULL_RESNET: True
+  AUX_TASKS:
+    tasks: ["CPCA", "PBL", "CPCA_B", "GID", "CoveragePrediction", "ActionDist_A"]
+    required_sensors: ["SEMANTIC_SENSOR"]
+    CoveragePrediction:
+      key: "mini_reached"
+      hidden_size: 32
+      loss_factor: 0.025
+      regression: False

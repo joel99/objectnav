@@ -1,0 +1,50 @@
+ENVIRONMENT:
+  MAX_EPISODE_STEPS: 500
+SIMULATOR:
+  AGENT_0:
+    SENSORS: ['RGB_SENSOR', 'DEPTH_SENSOR']
+  HABITAT_SIM_V0:
+    GPU_DEVICE_ID: 0
+    ALLOW_SLIDING: False
+  RGB_SENSOR:
+    WIDTH: 256 # 640 # 256
+    HEIGHT: 256 # 360 # 256
+    HFOV: 70
+    POSITION: [0, 0.88, 0]
+    NOISE_MODEL: "GaussianNoiseModel"
+    NOISE_MODEL_KWARGS:
+      intensity_constant: 0.1
+
+  DEPTH_SENSOR:
+    WIDTH: 256 # 640
+    HEIGHT: 256 # 360
+    HFOV: 70
+    MIN_DEPTH: 0.1
+    MAX_DEPTH: 10.0
+    POSITION: [0, 0.88, 0]
+    NOISE_MODEL: "RedwoodDepthNoiseModel"
+
+  ACTION_SPACE_CONFIG: 'pyrobotnoisy'
+  NOISE_MODEL:
+    ROBOT: "LoCoBot"
+    CONTROLLER: 'Proportional'
+    NOISE_MULTIPLIER: 0.5
+
+
+TASK:
+  TYPE: Nav-v0
+  SUCCESS_DISTANCE: 0.36
+  SENSORS: ['POINTGOAL_SENSOR']
+  POINTGOAL_SENSOR:
+    GOAL_FORMAT: POLAR
+    DIMENSIONALITY: 2
+  GOAL_SENSOR_UUID: pointgoal
+  MEASUREMENTS: ['COVERAGE', 'DISTANCE_TO_GOAL', 'SUCCESS', 'SPL']
+  SUCCESS:
+    SUCCESS_DISTANCE: 0.36
+
+DATASET:
+  TYPE: PointNav-v1
+  SPLIT: train
+  DATA_PATH: /srv/share/datasets/habitat-sim-datasets/pointnav/gibson/v1/{split}/{split}.json.gz
+  SCENES_DIR: "data/scene_datasets/"
