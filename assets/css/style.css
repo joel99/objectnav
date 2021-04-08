@@ -1,0 +1,9 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.page-header {
+    background-color: white;
+    background-image: none;
+}
