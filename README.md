@@ -60,15 +60,16 @@ You can evaluate a trained checkpoint by configuring the arguments in `./scripts
 See `run.py` for all arguments. Note that an evaluation on the full validation split can take a while (>1 GPU-day).
 
 ## Citation
-Citation coming shortly.
-<!-- If you use this work, you can cite it as
+If you use this work, you can cite it as
 
-@inproceedings{ye2020auxiliary,
-    title={Auxiliary Tasks Speed Up Learning PointGoal Navigation},
-    author={Joel Ye and Dhruv Batra and Erik Wijmans and Abhishek Das},
-    year={2020},
-    booktitle={Proceedings of the Conference on Robot Learning (CoRL)}
-} -->
+@misc{ye2021auxiliary,
+      title={Auxiliary Tasks and Exploration Enable ObjectNav},
+      author={Joel Ye and Dhruv Batra and Abhishek Das and Erik Wijmans},
+      year={2021},
+      eprint={2104.04112},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 
 ### Additional Notes
 - The 300-episode subset mentioned throughout analysis was created by sampling episodes uniformly across the scenes in train and val splits, using `scripts/dataset_slicer.py`
