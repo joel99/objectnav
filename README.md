@@ -61,7 +61,7 @@ See `run.py` for all arguments. Note that an evaluation on the full validation s
 
 ## Citation
 If you use this work, you can cite it as
-
+```
 @misc{ye2021auxiliary,
       title={Auxiliary Tasks and Exploration Enable ObjectNav},
       author={Joel Ye and Dhruv Batra and Abhishek Das and Erik Wijmans},
@@ -70,7 +70,7 @@ If you use this work, you can cite it as
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
-
+```
 ### Additional Notes
 - The 300-episode subset mentioned throughout analysis was created by sampling episodes uniformly across the scenes in train and val splits, using `scripts/dataset_slicer.py`
 - The `.py` notebooks in `scripts/` start with a comment denoting their use.
